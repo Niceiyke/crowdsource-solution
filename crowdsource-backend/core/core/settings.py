@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # main apps
     "account",
     "main",
+    'management',
     # Third party apps
     "rest_framework",
 ]

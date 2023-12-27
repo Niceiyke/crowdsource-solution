@@ -8,7 +8,7 @@ from django.contrib.auth.models import (
 )
 
 
-# Custom User Manager
+# Manager
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password=None, **extra_fields):
         if not email:
@@ -32,14 +32,13 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, username, password, **extra_fields)
 
 
-# Custom User Model
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    # Add more fields as needed
 
     objects = CustomUserManager()
 
@@ -55,9 +54,11 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="userprofile"
     )
-    # Add other profile fields as needed
+   
     bio = models.TextField(blank=True)
-    profile_picture = models.ImageField(upload_to="profile_pics/", default="1.png")
+    total_point =models.IntegerField(default=0)
+    profile_picture = models.ImageField(upload_to="media/profile_pics/", default="1.png")
 
     def __str__(self):
         return f"{self.user.username} Profile"
+
