@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
 from main.models import Problem, Solution, Vote, Category
+from account.models import UserProfile
+from account.serializers import UserProfileSerializer
 from main.serializers import (
     ProblemSerializer,
     SolutionSerializer,
@@ -9,6 +11,11 @@ from main.serializers import (
 )
 
 # Create your views here.
+
+
+class UserProfileView(generics.RetrieveAPIView):
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
 
 
 class ProblemsViews(generics.ListCreateAPIView):
