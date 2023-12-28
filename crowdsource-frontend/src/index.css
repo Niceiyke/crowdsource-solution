@@ -7,7 +7,7 @@
 
 body {
     /* @apply overflow-y-scroll no-scrollbar*/
-    @apply font-Public
+    @apply font-Public bg-gray-50 
 }
 
 @layer utilities {
@@ -28,6 +28,7 @@ body {
     }
 }
 
+
 h1 {
     @apply text-5xl font-black font-Public
 }
@@ -40,8 +41,8 @@ h3 {
     @apply text-2xl font-bold font-Public
 }
 
-.main {
-    @apply flex flex-col h-screen p-2 items-center justify-center
+main {
+    @apply container mx-auto my-4
 }
 
 .layout {}
@@ -70,10 +71,24 @@ input, select {
     @apply flex gap-2
 }
 
-.left-pane {
+.left-pane-split {
     @apply hidden md:block
 }
 
-.right-pane {
-    @apply w-[100%] mt-2
+
+
+.right-pane-split {
+    @apply w-[100%] md:w-[80%] mt-2
+}
+
+.left-pane-three {
+    @apply hidden md:block md:w-[15%]  mt-2
+}
+
+.center-pane-three {
+    @apply w-[100%] md:w-[50%] mt-2
+}
+
+.right-pane-three {
+    @apply hidden md:block md:w-[35%]  mt-2
 }

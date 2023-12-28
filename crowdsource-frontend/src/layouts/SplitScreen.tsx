@@ -7,13 +7,30 @@ interface SplitScreenProps {
   right: ReactNode;
 }
 
-function SplitScreen({ left, right }: SplitScreenProps) {
+interface ThreeScreenProps {
+  left: ReactNode;
+  center: ReactNode;
+  right: ReactNode;
+}
+
+export function SplitScreen({ left, right }: SplitScreenProps) {
   return (
-    <div className="split-screen">
-      <div className="left-pane">{left}</div>
-      <div className="right-pane">{right}</div>
-    </div>
+    <main className="split-screen">
+      <div className="left-pane-split">{left}</div>
+      <div className="right-pane-split">{right}</div>
+    </main>
   );
 }
 
-export default SplitScreen;
+
+
+export function ThreeScreen({ left,center, right }: ThreeScreenProps) {
+  return (
+    <main className="split-screen">
+      <div className="left-pane-three">{left}</div>
+      <div className="center-pane-three">{center}</div>
+      <div className="right-pane-three  ">{right}</div>
+    </main>
+  );
+}
+

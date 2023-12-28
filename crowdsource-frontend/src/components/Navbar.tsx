@@ -10,9 +10,9 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-gray-800 p-4">
+        <nav className="bg-gray-100 p-4 text-gray-800 border-b-2 border-t-4 border-t-green-800 border-b-gray-300">
             <div className="container mx-auto flex justify-between items-center">
-                <Link to="/" className="text-white text-xl font-bold">Your Logo</Link>
+                <Link to="/" className="text-green-900 text-2xl italic font-black font-Nunito">AskNaija</Link>
 
                 {/* Hamburger menu for mobile */}
                 <div className="lg:hidden">
@@ -40,8 +40,8 @@ const Navbar = () => {
                 {/* Navbar links */}
                 <div className={`lg:flex lg:items-center ${isOpen ? 'block' : 'hidden'}`}>
                     <div className="lg:flex lg:ml-4">
-                        <Link to="/" className="text-white px-3 py-2 rounded-md text-sm font-medium">Home</Link>
-                        <Link to="/about" className="text-white px-3 py-2 rounded-md text-sm font-medium">About</Link>
+                        <Link to="/" className=" font-bold px-3 py-2 rounded-md text-sm ">Home</Link>
+                        <Link to="/about" className=" font-bold px-3 py-2 rounded-md text-sm ">About</Link>
                         {/* Add more links as needed */}
                     </div>
                 </div>

@@ -1,14 +1,15 @@
 import React from 'react'
 
 import {ThreeScreen} from '../layouts/SplitScreen';
-import QuestionFeed from '../components/QuestionFeed';
+
 import RightSidebar from '../components/RightSidebar';
 import LeftSidebar from '../components/LeftSidebar';
+import QuestionForm from '../components/QuestionForm';
 
-function Home() {
+function QuestionPage() {
     return (
 
-<ThreeScreen left={<LeftSidebar/>} center={<QuestionFeed/>} right={<RightSidebar/>}/>
+<ThreeScreen left={<LeftSidebar/>} center={<QuestionForm/>} right={<RightSidebar/>}/>
 
     );
 }
@@ -16,4 +17,4 @@ function Home() {
 
 
 
-export default Home
+export default QuestionPage

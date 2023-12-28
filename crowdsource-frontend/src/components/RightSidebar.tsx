@@ -1,10 +1,10 @@
 // src/components/Sidebar.js
 import React from 'react';
 
-const Sidebar = () => {
+const RightSidebar = () => {
   return (
-    <div className="w-1/4">
-      <div className="bg-white p-4 shadow">
+    <div className="w-full">
+      <div className="bg-white p-4 shadow border border-green-300">
         <h2 className="text-xl font-semibold mb-4">Tags</h2>
         {/* Replace this with a list of tags */}
         <ul>
@@ -17,4 +17,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default RightSidebar;
