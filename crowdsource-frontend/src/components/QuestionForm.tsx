@@ -1,37 +1,44 @@
 // src/components/QuestionForm.tsx
 import React, { useState, FormEvent } from 'react';
 import GenericInput from './GenericInput';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addQuestion } from '../apis/apis';
 
-interface QuestionFormProps {
-  onSubmit: (title: string, description: string, tags: string) => void;
-}
 
-interface FormState {
-  title: string;
-  description: string;
-  tags: string;
-}
 
-const initialFormState: FormState = {
+
+const initialFormState: NewQuestion = {
   title: '',
   description: '',
-  tags: '',
+
 };
 
 const QuestionForm: React.FC = () => {
-  const [formState, setFormState] = useState<FormState>(initialFormState);
+  const [formState, setFormState] = useState<NewQuestion>(initialFormState);
 
-  const handleInputChange = (key: keyof FormState) => (value: string) => {
+  const handleInputChange = (key: keyof NewQuestion) => (value: string) => {
     setFormState((prevFormState) => ({ ...prevFormState, [key]: value }));
   };
 
-  
+  const queryClient = useQueryClient();
+
+  // Specify the type for your mutation result
+  const mutation = useMutation<any, Error, NewQuestion>(addQuestion, {
+    onSuccess: () => {
+      // Invalidate and refetch the data after mutation succeeds
+      queryClient.invalidateQueries('questions');
+    },
+  });
+
+
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Call the onSubmit callback with the form values
-   
-  
+
+    mutation.mutate({ title: formState.title, description: formState.description })
+
+
 
     // Reset the form fields
     setFormState(initialFormState);
@@ -57,14 +64,7 @@ const QuestionForm: React.FC = () => {
           onChange={handleInputChange('description')}
           required
         />
-        <GenericInput
-          label="Tags"
-          type="text"
-          id="tags"
-          value={formState.tags}
-          onChange={handleInputChange('tags')}
-          required
-        />
+
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"

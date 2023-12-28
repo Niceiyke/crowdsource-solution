@@ -7,7 +7,7 @@
 
 body {
     /* @apply overflow-y-scroll no-scrollbar*/
-    @apply font-Public bg-gray-50 
+    @apply font-Public bg-gray-50
 }
 
 @layer utilities {
@@ -82,13 +82,13 @@ input, select {
 }
 
 .left-pane-three {
-    @apply hidden md:block md:w-[15%]  mt-2
+    @apply hidden md:block md:w-[15%] mt-2
 }
 
 .center-pane-three {
-    @apply w-[100%] md:w-[50%] mt-2
+    @apply w-[100%] md:w-[55%] mt-2
 }
 
 .right-pane-three {
-    @apply hidden md:block md:w-[35%]  mt-2
+    @apply hidden md:block md:w-[30%] mt-2
 }

@@ -12,3 +12,10 @@ interface Question {
   description: string;
   created_at: string;
 }
+
+interface NewQuestion {
+  title: string;
+  description: string;
+
+
+}

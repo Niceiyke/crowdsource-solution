@@ -19,6 +19,11 @@ class Problem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = [
+            "-created_at",
+        ]
+
     def __str__(self):
         return self.title
 
@@ -30,6 +35,11 @@ class Solution(models.Model):
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     votes = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = [
+            "-created_at",
+        ]
 
     def __str__(self):
         return f"Solution for {self.problem.title}"
@@ -49,12 +59,18 @@ class Vote(models.Model):
 
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    description =models.CharField(max_length =200)
-    solution = models.ForeignKey(Solution, on_delete=models.CASCADE,related_name='comments')
+    description = models.CharField(max_length=200)
+    solution = models.ForeignKey(
+        Solution, on_delete=models.CASCADE, related_name="comments"
+    )
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    parent=models.ForeignKey('self',on_delete=models.CASCADE,blank=True,null=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        ordering = [
+            "-created_at",
+        ]
 
     def __str__(self):
         return f"Comment by {self.created_by.user.username} on {self.solution.problem.title}"
-

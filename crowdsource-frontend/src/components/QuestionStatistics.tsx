@@ -2,9 +2,9 @@
 import React from 'react';
 
 interface QuestionStatisticsProps {
-  totalVotes: number;
-  totalAnswers: number;
-  totalViews: number;
+  totalVotes: string;
+  totalAnswers: string;
+  totalViews: string;
 }
 
 const QuestionStatistics: React.FC<QuestionStatisticsProps> = ({
@@ -13,20 +13,20 @@ const QuestionStatistics: React.FC<QuestionStatisticsProps> = ({
   totalViews,
 }) => {
   return (
-  
-      <div className="hidden md:flex flex-col p-2 text-sm">
-        <div>
-          <p className="text-gray-600">{totalVotes} Votes</p>
-        </div>
-        <div>
 
-          <p className="text-gray-600">{totalAnswers} answers</p>
-        </div>
-        <div>
-          <p className="text-gray-600">{totalViews} views</p>
-        </div>
+    <div className="hidden md:flex flex-col p-2 text-sm">
+      <div>
+        <p className="text-gray-600">{totalVotes} Votes</p>
       </div>
- 
+      <div>
+
+        <p className="text-gray-600">{totalAnswers} answers</p>
+      </div>
+      <div>
+        <p className="text-gray-600">{totalViews} views</p>
+      </div>
+    </div>
+
   );
 };
 
