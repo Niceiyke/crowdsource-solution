@@ -12,6 +12,9 @@ from main.serializers import (
 
 # Create your views here.
 
+class CategoryViews(generics.ListAPIView):
+    serializer_class =CategorySerializer
+    queryset = Category.objects.all()
 
 class UserProfileView(generics.RetrieveAPIView):
     serializer_class = UserProfileSerializer
@@ -21,7 +24,6 @@ class UserProfileView(generics.RetrieveAPIView):
 class ProblemsViews(generics.ListCreateAPIView):
     serializer_class = ProblemSerializer
     queryset = Problem.objects.all()
-
 
 class SolutionViews(generics.ListCreateAPIView):
     serializer_class = SolutionSerializer

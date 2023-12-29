@@ -1,20 +1,35 @@
 // src/components/QuestionForm.tsx
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import GenericInput from './GenericInput';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addQuestion } from '../apis/apis';
+import axios from 'axios';
 
 
+interface Category {
+  id: string;
+  name: string;
+}
 
 
 const initialFormState: NewQuestion = {
   title: '',
   description: '',
+  category: '',
 
 };
 
 const QuestionForm: React.FC = () => {
   const [formState, setFormState] = useState<NewQuestion>(initialFormState);
+
+  const [categorys, setCategorys] = useState<Category[]>([]);
+
+  useEffect(() => {
+    // Fetch tags from the API
+    axios.get('http://127.0.0.1:8000/api/category')
+      .then(response => setCategorys(response.data))
+      .catch(error => console.error('Error fetching tags:', error));
+  }, []);
 
   const handleInputChange = (key: keyof NewQuestion) => (value: string) => {
     setFormState((prevFormState) => ({ ...prevFormState, [key]: value }));
@@ -33,7 +48,7 @@ const QuestionForm: React.FC = () => {
     e.preventDefault();
     // Call the onSubmit callback with the form values
 
-    await mutation.mutateAsync({ title: formState.title, description: formState.description })
+    await mutation.mutateAsync({ title: formState.title, description: formState.description,category:formState.category })
 
     console.log(mutation.status)
 
@@ -63,6 +78,24 @@ const QuestionForm: React.FC = () => {
           onChange={handleInputChange('description')}
           required
         />
+          <div className="mb-4">
+          <label htmlFor="categorys" className="block text-sm font-medium text-gray-600">
+          Categorys
+          </label>
+          <select
+            id="categorys"
+            name="categorys"
+            value={formState.selectedCategory}
+            onChange={(e) => handleInputChange('selectedCategory')(e.target.value)}
+            className="mt-1 p-2 w-full border rounded-md"
+            required
+          >
+            <option value="" disabled>Select a Category</option>
+            {categorys.map((category) => (
+              <option key={category.id} value={category.id}>{category.name}</option>
+            ))}
+          </select>
+        </div>
 
         <button
           type="submit"

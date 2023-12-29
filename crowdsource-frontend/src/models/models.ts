@@ -16,6 +16,7 @@ interface Question {
 interface NewQuestion {
   title: string;
   description: string;
+ category:string
 
 
 }
