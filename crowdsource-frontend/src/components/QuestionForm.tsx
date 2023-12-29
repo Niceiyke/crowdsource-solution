@@ -23,20 +23,19 @@ const QuestionForm: React.FC = () => {
   const queryClient = useQueryClient();
 
   // Specify the type for your mutation result
-  const mutation = useMutation<any, Error, NewQuestion>(addQuestion, {
-    onSuccess: () => {
-      // Invalidate and refetch the data after mutation succeeds
-      queryClient.invalidateQueries('questions');
-    },
-  });
+  const mutation = useMutation({
+    mutationFn: addQuestion, onError: (error) => { console.log(error) }, onSuccess: () => { console.log('success') }
+  })
 
 
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     // Call the onSubmit callback with the form values
 
-    mutation.mutate({ title: formState.title, description: formState.description })
+    await mutation.mutateAsync({ title: formState.title, description: formState.description })
+
+    console.log(mutation.status)
 
 
 
