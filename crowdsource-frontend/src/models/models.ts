@@ -16,7 +16,8 @@ interface Question {
 interface NewQuestion {
   title: string;
   description: string;
- category:string
+  created_by: string;
+  category: string;
 
 
 }

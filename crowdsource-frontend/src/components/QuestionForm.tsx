@@ -4,6 +4,7 @@ import GenericInput from './GenericInput';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addQuestion } from '../apis/apis';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 interface Category {
@@ -16,6 +17,7 @@ const initialFormState: NewQuestion = {
   title: '',
   description: '',
   category: '',
+  created_by: 'd6ac1afe-60bd-46d3-a674-d44cd3520b5f'
 
 };
 
@@ -23,6 +25,8 @@ const QuestionForm: React.FC = () => {
   const [formState, setFormState] = useState<NewQuestion>(initialFormState);
 
   const [categorys, setCategorys] = useState<Category[]>([]);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Fetch tags from the API
@@ -48,14 +52,11 @@ const QuestionForm: React.FC = () => {
     e.preventDefault();
     // Call the onSubmit callback with the form values
 
-    await mutation.mutateAsync({ title: formState.title, description: formState.description,category:formState.category })
-
-    console.log(mutation.status)
-
-
+    await mutation.mutateAsync({ title: formState.title, description: formState.description, category: formState.category, created_by: formState.created_by })
 
     // Reset the form fields
     setFormState(initialFormState);
+    navigate('/')
   };
 
   return (
@@ -78,15 +79,15 @@ const QuestionForm: React.FC = () => {
           onChange={handleInputChange('description')}
           required
         />
-          <div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="categorys" className="block text-sm font-medium text-gray-600">
-          Categorys
+            Categorys
           </label>
           <select
             id="categorys"
             name="categorys"
-            value={formState.selectedCategory}
-            onChange={(e) => handleInputChange('selectedCategory')(e.target.value)}
+            value={formState.category}
+            onChange={(e) => handleInputChange('category')(e.target.value)}
             className="mt-1 p-2 w-full border rounded-md"
             required
           >
