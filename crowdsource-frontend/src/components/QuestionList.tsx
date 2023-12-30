@@ -1,11 +1,12 @@
 // src/components/QuestionsList.tsx
 import React from "react";
 import QuestionStatistics from "./QuestionStatistics";
-import Asker from "./QuestionAsker";
+import USerCard from "./UserCard";
 import QuestionTags from "./QuestionTags";
 
 import QuestionCard from "./QuestionCard";
 import { formatDateTime, formatViews } from "../utils/Formater";
+import UserCard from "./UserCard";
 
 interface QuestionListProps {
   data: Question;
@@ -44,12 +45,12 @@ const QuestionsList: React.FC<QuestionListProps> = ({ data }) => {
       <section className="">
         {/* Question component */}
         <section className=" mb-4">
-          <QuestionCard title={data.title} description={data.description} />
+          <QuestionCard id={data.id} title={data.title} description={data.description} />
 
           <section className="">
             {" "}
-            <Asker
-              avatar={`http://127.0.0.1:8000/${data.user.pix}`}
+            <UserCard
+              avatar={data.user.pix}
               username={data.user.username}
               reputation={user.reputation}
               duration={formatDateTime(data.created_at)}

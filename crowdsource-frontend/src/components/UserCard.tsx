@@ -8,11 +8,11 @@ interface UserProps {
   duration: string
 }
 
-const Asker: React.FC<UserProps> = ({ avatar, username, reputation, duration }) => {
+const UserCard: React.FC<UserProps> = ({ avatar, username, reputation, duration }) => {
   return (
     <div className="flex items-center text-sm space-x-1 mt-2 mb-2">
       <img
-        src={avatar}
+        src={`http://127.0.0.1:8000/${avatar}`}
         alt={`${username}'s avatar`}
         className="w-8 h-8 rounded-full mr-2"
       />
@@ -24,4 +24,4 @@ const Asker: React.FC<UserProps> = ({ avatar, username, reputation, duration }) 
   );
 };
 
-export default Asker;
+export default UserCard;

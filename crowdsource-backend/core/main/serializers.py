@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Problem, Solution, Vote, Comment
+from .models import Category, Question, Solution, Vote, Comment
 from account.models import UserProfile
 from account.serializers import UserProfileSerializer
 
@@ -10,11 +10,11 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ProblemSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
     class Meta:
-        model = Problem
+        model = Question
         fields = "__all__"
 
     def get_user(self, obj):
@@ -45,14 +45,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class SolutionSerializer(serializers.ModelSerializer):
-    upvote = serializers.SerializerMethodField()
-    downvote = serializers.SerializerMethodField()
     comments = serializers.SerializerMethodField()
     solution_owner = serializers.SerializerMethodField()
+    user_vote = serializers.SerializerMethodField()
 
     class Meta:
         model = Solution
         fields = "__all__"
+        extra_kwargs = {"created_by": {"read_only": True}}
 
     def get_solution_owner(self, obj):
         owner = UserProfile.objects.filter(id=obj.created_by.id).first()
@@ -61,16 +61,6 @@ class SolutionSerializer(serializers.ModelSerializer):
 
         return serializer.data
 
-    def get_upvote(self, obj):
-        upvote = Vote.objects.filter(solution=obj.id).filter(is_agree=True).count()
-
-        return upvote
-
-    def get_downvote(self, obj):
-        downvote = Vote.objects.filter(solution=obj.id).filter(not_agree=True).count()
-
-        return downvote
-
     def get_comments(self, obj):
         comments = Comment.objects.filter(solution=obj.id)
 
@@ -78,8 +68,17 @@ class SolutionSerializer(serializers.ModelSerializer):
 
         return serializer.data
 
+    def get_user_vote(self, obj):
+        user_profile = self.context["request"].user.userprofile
+        return obj.get_user_vote(user_profile)
+
+    def create(self, validated_data):
+        user_profile = self.context["request"].user.userprofile
+        validated_data["created_by"] = user_profile
+        return super().create(validated_data)
+
 
 class VoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vote
-        fields = "__all__"
+        fields = ["id", "solution", "voted_by", "value", "created_at"]

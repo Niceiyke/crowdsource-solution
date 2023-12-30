@@ -21,7 +21,7 @@ function Questions() {
 
   return (
     <section>
-      {data?.map((question) => (
+      {data?.data.map((question:Question) => (
         <QuestionsList key={question.id} data={question} />
       ))}
     </section>

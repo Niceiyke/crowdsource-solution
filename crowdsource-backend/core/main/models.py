@@ -11,7 +11,7 @@ class Category(models.Model):
         return self.name
 
 
-class Problem(models.Model):
+class Question(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -30,11 +30,10 @@ class Problem(models.Model):
 
 class Solution(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     description = models.TextField()
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    votes = models.IntegerField(default=0)
 
     class Meta:
         ordering = [
@@ -42,19 +41,24 @@ class Solution(models.Model):
         ]
 
     def __str__(self):
-        return f"Solution for {self.problem.title}"
+        return f"Solution for {self.question.title}"
+
+    def get_user_vote(self, user_profile):
+        try:
+            vote = Vote.objects.get(solution=self, voted_by=user_profile)
+            return vote.value
+        except Vote.DoesNotExist:
+            return 0  # User has not voted on this solution
 
 
 class Vote(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     solution = models.ForeignKey(Solution, on_delete=models.CASCADE)
     voted_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    is_agree = models.BooleanField()
-    not_agree = models.BooleanField()
+    value = models.IntegerField(
+        default=0
+    )  # 0 for no vote, +1 for upvote, -1 for downvote
     created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Vote by {self.voted_by.user.username} on {self.solution.problem.title}"
 
 
 class Comment(models.Model):
