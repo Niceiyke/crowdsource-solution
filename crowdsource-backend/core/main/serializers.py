@@ -12,21 +12,38 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class QuestionSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
+    post_liked_by = serializers.SerializerMethodField()
 
     class Meta:
         model = Question
         fields = "__all__"
+        extra_kwargs = {
+            "created_by": {"read_only": True},
+            "liked_by": {"read_only": True},
+            "disliked_by": {"read_only": True},
+        }
 
     def get_user(self, obj):
         data = UserProfile.objects.filter(id=obj.created_by.id).first()
         username = data.user.username
         email = data.user.email
         bio = data.bio
-        pix = str(data.profile_picture)
-        return {"username": username, "email": email, "bio": bio, "pix": pix}
+        profile_picture = str(data.profile_picture)
+        return {
+            "username": username,
+            "email": email,
+            "bio": bio,
+            "profile_picture": profile_picture,
+        }
 
-    def create(self, validated_data):
-        return super().create(validated_data)
+    def get_post_liked_by(self, obj):
+        user = self.context["request"].user.userprofile.id
+        print(obj.liked_by)
+
+        user = [user for user in obj.liked_by]
+        print("user", user)
+
+        return user
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -47,12 +64,15 @@ class CommentSerializer(serializers.ModelSerializer):
 class SolutionSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     solution_owner = serializers.SerializerMethodField()
-    user_vote = serializers.SerializerMethodField()
 
     class Meta:
         model = Solution
         fields = "__all__"
-        extra_kwargs = {"created_by": {"read_only": True}}
+        extra_kwargs = {
+            "created_by": {"read_only": True},
+            "liked_by": {"read_only": True},
+            "disliked_by": {"read_only": True},
+        }
 
     def get_solution_owner(self, obj):
         owner = UserProfile.objects.filter(id=obj.created_by.id).first()
@@ -67,10 +87,6 @@ class SolutionSerializer(serializers.ModelSerializer):
         serializer = CommentSerializer(comments, many=True)
 
         return serializer.data
-
-    def get_user_vote(self, obj):
-        user_profile = self.context["request"].user.userprofile
-        return obj.get_user_vote(user_profile)
 
     def create(self, validated_data):
         user_profile = self.context["request"].user.userprofile

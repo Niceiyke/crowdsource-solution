@@ -1,14 +1,23 @@
-// src/components/Footer.js
+// components/UpvoteDownvoteComment.tsx
 import React from 'react';
+import { FaComment} from 'react-icons/fa';
+import { BiUpvote,BiDownvote} from 'react-icons/bi';
+import IconButton from './IconButton';
 
-const Footer = () => {
-    return (
-        <footer className="bg-gray-200 p-4 mt-8">
-            <div className="container mx-auto text-center">
-                <p className="text-gray-600">© 2023 Stack Overflow Clone</p>
-            </div>
-        </footer>
-    );
+
+const Footer: React.FC = () => {
+  
+  const vote= ()=>{}
+
+  return (
+    <div className="flex shadow-lg mt-2">
+        <IconButton icon={<BiUpvote/>} onClick={vote} color=''/>
+        <IconButton icon={<BiDownvote/>} onClick={vote} color=''/>
+        <IconButton icon={<FaComment/>} onClick={vote} color='text-green-700'/>
+       
+
+    </div>
+  );
 };
 
 export default Footer;

@@ -18,6 +18,12 @@ class Question(models.Model):
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    liked_by = models.ManyToManyField(
+        UserProfile, blank=True, related_name="question_likedby"
+    )
+    diliked_by = models.ManyToManyField(
+        UserProfile, blank=True, related_name="question_dislikedby"
+    )
 
     class Meta:
         ordering = [
@@ -34,6 +40,12 @@ class Solution(models.Model):
     description = models.TextField()
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    liked_by = models.ManyToManyField(
+        UserProfile, blank=True, related_name="solution_likedby"
+    )
+    diliked_by = models.ManyToManyField(
+        UserProfile, blank=True, related_name="solution_dislikedby"
+    )
 
     class Meta:
         ordering = [

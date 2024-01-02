@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from main.models import Question, Solution, Vote, Category
 from account.models import UserProfile
 from account.serializers import UserProfileSerializer
@@ -41,3 +43,10 @@ class SolutionViews(generics.ListCreateAPIView):
 class VoteViews(generics.CreateAPIView):
     serializer_class = VoteSerializer
     queryset = Vote.objects.all()
+
+
+class SolutionDetailApiView(APIView):
+    def get(self, request, pk):
+        qs = Solution.objects.filter(question=pk)
+        serializer = SolutionSerializer(qs, many=True)
+        return Response(serializer.data)

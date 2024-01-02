@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 
-import { getQuestions } from '../apis/apis'
+import { getQuestions } from '../../apis/apis'
 
 import QuestionsList from './QuestionList';
 
@@ -16,9 +16,7 @@ function Questions() {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-
-  console.log(data)
-
+  console.log(data?.data)
   return (
     <section>
       {data?.data.map((question:Question) => (

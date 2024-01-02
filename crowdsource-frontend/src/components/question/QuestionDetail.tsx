@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
-import { getQuestionDetail } from "../apis/apis"
+import { getQuestionDetail } from "../../apis/apis"
 import QuestionDetailCard from "./QuestionDetailCard"
 
 

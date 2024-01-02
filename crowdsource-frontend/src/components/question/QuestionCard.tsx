@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { getSnippet } from "../utils/Formater";
+import { getSnippet } from "../../utils/Formater";
 
 interface QuestionCardProps {
   id: string
@@ -8,12 +7,12 @@ interface QuestionCardProps {
 
 }
 
-const QuestionCard: React.FC<QuestionCardProps> = ({ id, title, description }) => {
+const QuestionCard: React.FC<QuestionCardProps> = ({title, description }) => {
   // Check if the date string is valid
 
   return (
     <article className="">
-      <Link to={id} className="text-green-700">{title}</Link>
+      <h3 className="text-green-700">{title}</h3>
       <p className="text-gray-800 text-sm">{getSnippet(description)}</p>
 
     </article>

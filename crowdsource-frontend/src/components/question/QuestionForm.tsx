@@ -1,8 +1,8 @@
 // src/components/QuestionForm.tsx
 import React, { useState, FormEvent, useEffect } from 'react';
-import GenericInput from './GenericInput';
+import GenericInput from '../GenericInput';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addQuestion } from '../apis/apis';
+import { addQuestion } from '../../apis/apis';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

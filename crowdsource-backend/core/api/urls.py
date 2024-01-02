@@ -4,6 +4,7 @@ from .views import (
     QuestionViews,
     QuestionDetailView,
     SolutionViews,
+    SolutionDetailApiView,
     UserProfileView,
     CategoryViews,
     VoteViews,
@@ -16,5 +17,6 @@ urlpatterns = [
     path("questions", QuestionViews.as_view()),
     path("question/<str:pk>", QuestionDetailView.as_view()),
     path("solutions", SolutionViews.as_view()),
+    path("solution/<str:pk>", SolutionDetailApiView.as_view()),
     path("vote", VoteViews.as_view()),
 ]

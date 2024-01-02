@@ -17,3 +17,7 @@ export const addQuestion = async (newData: NewQuestion): Promise<any> => {
 export const getQuestionDetail = async (qustionId: string | undefined) => {
    return axios.get(`${BASEURL}/question/${qustionId}`)
 }
+
+export const getSolution = async (qustionId: string | undefined) => {
+   return axios.get(`${BASEURL}/solution/${qustionId}`)
+}

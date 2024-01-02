@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {ThreeScreen} from '../layouts/SplitScreen';
-import QuestionFeed from '../components/QuestionFeed';
+import QuestionFeed from '../components/question/QuestionFeed';
 import RightSidebar from '../components/RightSidebar';
 import LeftSidebar from '../components/LeftSidebar';
 

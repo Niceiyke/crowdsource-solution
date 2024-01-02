@@ -1,14 +1,15 @@
 // src/components/User.tsx
 import React from "react";
+import { formatDateTime } from "../utils/Formater";
 
 interface UserProps {
   avatar: string;
   username: string;
-  reputation: number;
+  action: string;
   duration: string
 }
 
-const UserCard: React.FC<UserProps> = ({ avatar, username, reputation, duration }) => {
+const UserCard: React.FC<UserProps> = ({ avatar, username, action, duration }) => {
   return (
     <div className="flex items-center text-sm space-x-1 mt-2 mb-2">
       <img
@@ -18,8 +19,8 @@ const UserCard: React.FC<UserProps> = ({ avatar, username, reputation, duration 
       />
 
       <p className="font-bold">{username}</p>
-      <p className="text-gray-600">{reputation}</p>
-      <p className="text-gray-600">asked {duration}</p>
+     
+      <p className="text-gray-600"> {action} {formatDateTime(duration)}</p>
     </div>
   );
 };

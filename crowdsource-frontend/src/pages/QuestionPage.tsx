@@ -3,7 +3,7 @@ import { ThreeScreen } from '../layouts/SplitScreen';
 
 import RightSidebar from '../components/RightSidebar';
 import LeftSidebar from '../components/LeftSidebar';
-import QuestionForm from '../components/QuestionForm';
+import QuestionForm from '../components/question/QuestionForm';
 
 function QuestionPage() {
     return (
